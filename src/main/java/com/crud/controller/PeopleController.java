@@ -1,7 +1,7 @@
-package controller;
+package com.crud.controller;
 
-import dao.PeopleDAO;
-import model.People;
+import com.crud.dao.PeopleDAO;
+import com.crud.model.People;
 
 import java.util.List;
 
@@ -32,6 +32,10 @@ public class PeopleController {
 
     public boolean deletePeople(int id) {
         return peopleDAO.delete(id);
+    }
+
+    public People getOne(int id){
+        return peopleDAO.getOne(id);
     }
 
     public List<People> getAll(){

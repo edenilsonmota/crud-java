@@ -1,4 +1,4 @@
-package model;
+package com.crud.model;
 
 public class People {
     private int id;

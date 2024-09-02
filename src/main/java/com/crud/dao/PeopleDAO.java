@@ -1,6 +1,6 @@
-package dao;
+package com.crud.dao;
 
-import model.People;
+import com.crud.model.People;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -89,6 +89,35 @@ public class PeopleDAO {
         return status;
     }
 
+    public People getOne(int id){
+        boolean status = false;
+
+        People people = null;
+        String query = "SELECT * FROM people WHERE id = ?";
+
+        try(
+                Connection conn = getConnection();
+                PreparedStatement stmt = conn.prepareStatement(query);
+        ){
+            stmt.setInt(1, id);
+            ResultSet rs = stmt.executeQuery();
+
+            //iterar o resultado
+            if(rs.next()){
+                people = new People(
+                        rs.getInt("ID"),
+                        rs.getString("cpf"),
+                        rs.getString("name"),
+                        rs.getString("email")
+                );
+            }
+        } catch (SQLException e){
+            throw new RuntimeException("Erro ao buscar usuario", e);
+        }
+
+        return people;
+    }
+
    public List<People> getAll(){
         List<People> peoples = new ArrayList<>(); //reversando a lista
 
@@ -108,7 +137,7 @@ public class PeopleDAO {
                         rs.getString("email")));
             }
         } catch (SQLException e){
-            throw new RuntimeException("Erro ao bsucar usuarios", e);
+            throw new RuntimeException("Erro ao buscar usuarios", e);
         }
 
         return peoples;
