@@ -30,6 +30,10 @@ public class PeopleController {
         return peopleDAO.update(people, id);
     }
 
+    public boolean deletePeople(int id) {
+        return peopleDAO.delete(id);
+    }
+
     public List<People> getAll(){
         return peopleDAO.getAll();
     }

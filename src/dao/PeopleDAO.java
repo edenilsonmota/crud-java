@@ -70,6 +70,25 @@ public class PeopleDAO {
         return status;
     }
 
+    public boolean delete (int id){
+        String query = "DELETE FROM people WHERE id = ?";
+        boolean status = false;
+
+        try(
+                Connection conn = getConnection();
+                PreparedStatement stmt = conn.prepareStatement(query);
+        ){
+            stmt.setInt(1, id);
+            stmt.execute();
+
+            status = true;
+        } catch (SQLException e){
+            throw new RuntimeException("Error ao deletar usuario", e);
+        }
+
+        return status;
+    }
+
    public List<People> getAll(){
         List<People> peoples = new ArrayList<>(); //reversando a lista
 
