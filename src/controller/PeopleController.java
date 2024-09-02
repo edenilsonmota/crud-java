@@ -14,12 +14,20 @@ public class PeopleController {
         this.people = new People();
     }
 
-    public boolean setPeople(String cpf, String name, String email) {
+    public boolean createPeople(String cpf, String name, String email) {
         people.setCpf(cpf);
         people.setName(name);
         people.setEmail(email);
 
         return peopleDAO.insert(people);
+    }
+
+    public boolean updatePeople(String cpf, String name, String email, int id) {
+        people.setCpf(cpf);
+        people.setName(name);
+        people.setEmail(email);
+
+        return peopleDAO.update(people, id);
     }
 
     public List<People> getAll(){

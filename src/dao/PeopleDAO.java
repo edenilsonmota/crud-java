@@ -26,7 +26,7 @@ public class PeopleDAO {
         }
     }
 
-    public boolean insert(People peopleModel){
+    public boolean insert(People people){
         String query = "INSERT INTO people (cpf, name, email) VALUES (?, ?, ?)";
         boolean status = false;
 
@@ -36,13 +36,35 @@ public class PeopleDAO {
                 PreparedStatement stmt = conn.prepareStatement(query);
                 ){
 
-            stmt.setString(1, peopleModel.getCpf());
-            stmt.setString(2, peopleModel.getName());
-            stmt.setString(3, peopleModel.getEmail());
+            stmt.setString(1, people.getCpf());
+            stmt.setString(2, people.getName());
+            stmt.setString(3, people.getEmail());
             stmt.execute();
             status = true;
         } catch (SQLException e){
             throw new RuntimeException("error ao inserir usuarios", e);
+        }
+
+        return status;
+    }
+
+    public boolean update (People people, int id){
+        String query = "UPDATE people SET cpf = ?, name = ?, email = ? WHERE id = ?";
+        boolean status = false;
+
+        try(
+                Connection conn = getConnection();
+                PreparedStatement stmt = conn.prepareStatement(query);
+                ){
+            stmt.setString(1, people.getCpf());
+            stmt.setString(2, people.getName());
+            stmt.setString(3, people.getEmail());
+            stmt.setInt(4, id);
+            stmt.execute();
+
+            status = true;
+        } catch (SQLException e){
+            throw new RuntimeException("Error ao atualizar usuario", e);
         }
 
         return status;
